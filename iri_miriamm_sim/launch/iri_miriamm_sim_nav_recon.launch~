@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+
+<launch>
+	<!-- IRI MIRIAMM SIMULATION SETUP -->
+	<!-- ============================ -->
+	<!-- PETER LEPEJ ====== 10.4.2014 -->
+	<!-- ============================ -->
+
+<!-- SIMULATION ENVIRONMENT SETUP -->
+<!-- ============================ -->
+
+	<!-- Simple park Forest -->
+	<!-- <include file="$(find iri_miriamm_sim)/launch/iri_miriamm_world_3.launch"/> -->
+
+	<!-- reconstructed environment test -->
+	<include file="$(find iri_miriamm_sim)/launch/iri_miriamm_world_5.launch"/>
+
+	<!-- 
+		1. Is the sction clien compatible?
+		2. Commands sequence?
+		3. Exploration strategy - check and complete the exploration!
+		4. Path planner more advanced solution for free path searc and add expansion for lookahead if no free found, choose point with the most density!
+
+	-->
+
+
+	<!-- Spawn simulated quadrotor uav -->
+	<include file="$(find iri_miriamm_sim)/launch/spawn_quadcopter.launch" >
+	<arg name="model" value="$(find iri_miriamm_sim)/urdf/quadcopter_iri_conf.gazebo.xacro"/> 
+	</include>
+
+<!-- 2D MAPPING AND 3D MAPPING -->
+<!-- ========================= -->
+
+	<!-- Start SLAM system -->
+	<!--<include file="$(find hector_mapping)/launch/mapping_default.launch">
+	<arg name="odom_frame" value="world"/>
+	</include>-->
+
+	<!-- Start GeoTIFF mapper -->
+	<!--<arg name="map_file_path" default="$(find iri_miriamm_sim)/maps"/>
+	<arg name="map_file_base_name" default="iri_sim_map"/>
+
+	<node pkg="hector_geotiff" type="geotiff_node" name="hector_geotiff_node" output="screen" launch-prefix="nice -n 15">
+		<remap from="map" to="/map" />
+		<param name="map_file_path" type="string" value="$(arg map_file_path)" />
+		<param name="map_file_base_name" type="string" value="$(arg map_file_base_name)" />
+		<param name="geotiff_save_period" type="double" value="0" />
+		<param name="draw_background_checkerboard" type="bool" value="true" />
+		<param name="draw_free_space_grid" type="bool" value="true" />
+		<param name="plugins" type="string" value="hector_geotiff_plugins/TrajectoryMapWriter" />
+	</node>-->
+
+	<!-- PointCloud 2 PointCloud2 Converter -->
+	  <node pkg="point_cloud_converter" name="point_cloud_converter_preself" type="point_cloud_converter">
+		<remap from="/points_in" to="/scan_3d" />
+		<remap from="/points2_out" to="/scan_3d_pc2" />
+	  </node>
+
+	<!-- Octomap Server -->
+	<node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+	    <param name="resolution" value="0.05" />
+
+	    <!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
+	    <param name="frame_id" type="string" value="world" />
+
+	    <!-- maximum range to integrate (speedup!) -->
+
+	    <param name="sensor_model/max_range" value="5.0" />
+	    <param name="pointcloud_min_z" value="0.0"/>
+	    <param name="pointcloud_max_z" value="1.0"/>
+		<!--
+	    <param name="sensor_model/hit" value= "0.65" />
+	    <param name="sensor_model/miss" value= "0.35" />	
+	    <param name="sensor_model/min" value= "0.15" />
+	    <param name="sensor_model/max" value= "0.85" />
+
+		<param name="min_z_range" value="0.05" />	
+		<param name="max_z_range" value="1.8" />	
+		<param name="min_x_size" value="25.0" />
+		<param name="min_y_size" value="25.0" />
+		<param name="pointcloud_min_z" value="0.10"/>
+		<param name="pointcloud_max_z" value="1.80"/>	
+		-->
+		<param name="filter_ground" value="false"/>
+
+	    <param name="latch" value="false" />
+	    <!-- data source to integrate (PointCloud2) -->
+	     <remap from="cloud_in" to="/scan_3d_pc2" />
+
+	</node>
+
+	<!-- Save Octomap -->
+	<!-- rosrun map_server map_saver -f mymap == octomap_saver -f mapfile.ot -->
+
+<!-- POSE ESTIMATION -->
+<!-- ==================== -->
+
+	<!-- Pose Reading from TF-->
+	<!--<node name="relay_pose_topic" type="throttle" pkg="topic_tools" args="/ground_truth_to_tf/pose /odom_fake 10.0" />-->
+ 	<!-- <node name="pose_throttler" type="throttle" pkg="topic_tools" args="messages /ground_truth_to_tf/pose 200 /odom_fake" />-->
+	<!-- get odom at full speed -->
+	<node name="pose_relay" type="relay" pkg="topic_tools" args="/ground_truth_to_tf/pose /odom_fake" />
+
+	<!-- Trajectory Server -->
+	<arg name="trajectory_source_frame_name" default="/base_link"/>
+	<arg name="trajectory_update_rate" default="2"/>
+	<arg name="trajectory_publish_rate" default="0.2"/>
+
+	<node pkg="hector_trajectory_server" type="hector_trajectory_server" name="hector_trajectory_server" output="screen">
+		<param name="target_frame_name" type="string" value="/world" />
+		<param name="source_frame_name" type="string" value="$(arg trajectory_source_frame_name)" />
+		<param name="trajectory_update_rate" type="double" value="$(arg trajectory_update_rate)" />
+		<param name="trajectory_publish_rate" type="double" value="$(arg trajectory_publish_rate)" />
+	</node>
+
+<!-- PATH PLANNING -->
+<!-- ==================== -->
+
+	<!-- Path Planning in Forest Environment -->
+	<include file="$(find iri_miriamm_path_planning)/launch/iri_miriamm_path_planning.launch"/>
+
+	<!-- Path Exploration -->
+	<include file="$(find iri_miriamm_exploration)/launch/iri_miriamm_exploration.launch"/>
+
+	<!-- Path Following -->
+	<include file="$(find iri_miriamm_path_follower)/launch/iri_miriamm_path_follower.launch"/>
+  
+<!-- VIZUALIZATION -->
+<!-- ============= -->
+
+	<!-- Start rviz visualization with preset config -->
+  <!-- Start rviz visualization with preset config -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find iri_miriamm_sim)/rviz_conf/forest_rviz.rviz"/>
+
+</launch>

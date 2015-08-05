@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find hector_gazebo_worlds)/launch/start.launch">
+   <arg name="world" value="$(find iri_miriamm_sim)/worlds/experimental_lab.world"/> 
+   <arg name="gui" value="true"/>
+  </include>
+
+</launch>
+

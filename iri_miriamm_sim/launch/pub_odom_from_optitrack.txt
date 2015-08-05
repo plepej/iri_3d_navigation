@@ -1,0 +1,54 @@
+//publish from optitrack
+Topic: /object/pose
+Type: geometry_msgs/TransformStamped
+
+rostopic pub -r 20 /object/pose geometry_msgs/TransformStamped "header:
+  seq: 0
+  stamp:
+    secs: 0
+    nsecs: 0
+  frame_id: ''
+child_frame_id: ''
+transform:
+  translation:
+    x: 3.0
+    y: 0.0
+    z: 0.3
+  rotation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0"
+
+
+//commad to GAZEBO ---
+
+
+Topic: /command/pose
+Type: geometry_msgs/PoseStamped
+
+Syntax:
+
+ rostopic pub /command/pose geometry_msgs/PoseStamped "header:
+  seq: 0.0
+  stamp:.0" 
+    secs: 0
+    nsecs: 0
+  frame_id: ''
+pose:
+  position:
+    x: 1.0
+    y: 0.0
+    z: 0.5
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0" 
+
+
+---- FASTER Alternative: Gazebo state publiher -----------------------
+
+rostopic pub -r 20 /gazebo/set_model_state gazebo_msgs/ModelState '{model_name: quadrotor, pose: { position: { x: 1, y: 0, z: 2 }, orientation: {x: 0, y: 0.491983115673, z: 0, w: 0.870604813099 } }, twist: { linear: { x: 0, y: 0, z: 0 }, angular: { x: 0, y: 0, z: 0}  }, reference_frame: world }'
+
+

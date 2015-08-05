@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find iri_miriamm_sim)/launch/start.launch">
+   <arg name="world" value="$(find iri_miriamm_sim)/worlds/experimental_lab_trees_simple.world"/> 
+   <arg name="gui" value="true"/>
+  </include>
+
+</launch>
+

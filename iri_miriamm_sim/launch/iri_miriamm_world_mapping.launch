@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<launch>
+	<!-- IRI MIRIAMM SIMULATION SETUP -->
+	<!-- ============================ -->
+	<!-- PETER LEPEJ ====== 29.6.2015 -->
+	<!-- ============================ -->
+
+
+<!-- 2D MAPPING AND 3D MAPPING -->
+<!-- ========================= -->
+
+	<!-- Start SLAM system -->
+	<!--<include file="$(find hector_mapping)/launch/mapping_default.launch">
+	<arg name="odom_frame" value="world"/>
+	</include>-->
+
+	<!-- Start GeoTIFF mapper -->
+	<!--<arg name="map_file_path" default="$(find iri_miriamm_sim)/maps"/>
+	<arg name="map_file_base_name" default="iri_sim_map"/>
+
+	<node pkg="hector_geotiff" type="geotiff_node" name="hector_geotiff_node" output="screen" launch-prefix="nice -n 15">
+		<remap from="map" to="/map" />
+		<param name="map_file_path" type="string" value="$(arg map_file_path)" />
+		<param name="map_file_base_name" type="string" value="$(arg map_file_base_name)" />
+		<param name="geotiff_save_period" type="double" value="0" />
+		<param name="draw_background_checkerboard" type="bool" value="true" />
+		<param name="draw_free_space_grid" type="bool" value="true" />
+		<param name="plugins" type="string" value="hector_geotiff_plugins/TrajectoryMapWriter" />
+	</node>-->
+
+	<!-- PointCloud 2 PointCloud2 Converter -->
+	  <!--<node pkg="point_cloud_converter" name="point_cloud_converter_preself" type="point_cloud_converter">
+		<remap from="/points_in" to="/scan_3d" />
+		<remap from="/points2_out" to="/scan_3d_pc2" />
+	  </node>-->
+
+	<!-- Octomap Server -->
+	<node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+	    <param name="resolution" value="0.02" />
+
+	    <!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
+	    <param name="frame_id" type="string" value="/teo_h3d" />
+
+	    <!-- maximum range to integrate (speedup!) -->
+
+	    <param name="sensor_model/max_range" value="6.0" />
+	    <param name="pointcloud_min_z" value="-1.5"/>
+	    <param name="pointcloud_max_z" value="1.89"/>
+		<!--
+	    <param name="sensor_model/hit" value= "0.65" />
+	    <param name="sensor_model/miss" value= "0.35" />	
+	    <param name="sensor_model/min" value= "0.15" />
+	    <param name="sensor_model/max" value= "0.85" />
+
+		<param name="min_z_range" value="0.05" />	
+		<param name="max_z_range" value="1.8" />	
+		<param name="min_x_size" value="25.0" />
+		<param name="min_y_size" value="25.0" />
+		<param name="pointcloud_min_z" value="0.10"/>
+		<param name="pointcloud_max_z" value="1.80"/>	
+		-->
+		<param name="filter_ground" value="false"/>
+
+	    <param name="latch" value="false" />
+	    <!-- data source to integrate (PointCloud2) -->
+	     <remap from="cloud_in" to="/teo/sensors/h3d/cloud" />
+
+	</node>
+
+	<!-- Save Octomap -->
+	<!-- rosrun map_server map_saver -f mymap == octomap_saver -f mapfile.ot -->
+
+
+
+
+</launch>

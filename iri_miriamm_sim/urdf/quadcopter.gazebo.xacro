@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<robot name="quadrotor" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find iri_miriamm_sim)/urdf/quadcopter.urdf.xacro" />
+
+    <!-- Pusti! Samo senzorji!-->
+    <xacro:include filename="$(find iri_miriamm_sim)/urdf/quadcopter_plugins.gazebo.xacro" />
+</robot>
+
