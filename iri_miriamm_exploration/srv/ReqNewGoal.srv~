@@ -1,0 +1,8 @@
+int32 in0
+int32 in1
+int32 in2
+---
+int64 x
+int64 y
+int64 z
+

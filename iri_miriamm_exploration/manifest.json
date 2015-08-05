@@ -1,0 +1,15 @@
+{
+    "name": "com.ubuntu.developer.username.iri-miriamm-exploration",
+    "description": "description of iri-miriamm-exploration",
+    "framework": "ubuntu-sdk-14.04-qml",
+    "architecture": "all",
+    "title": "iri-miriamm-exploration",
+    "hooks": {
+        "iri-miriamm-exploration": {
+            "apparmor": "iri-miriamm-exploration.json",
+            "desktop": "iri_miriamm_exploration.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": ""
+}

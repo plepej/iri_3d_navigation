@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node pkg="iri_miriamm_path_follower" type="iri_miriamm_path_follower" name="iri_miriamm_path_follower" output="screen">
+
+		<!-- global params -->
+		<param name="global_frame" type="string" value="/world" />		
+		<param name="pose_update_topic" type="string" value="/odom_fake" />
+		<param name="octomap_topic" type="string" value="/octomap_full" />
+		<param name="exploration_path_topic" type="string" value="/global_path" />
+		<param name="cmd_vel_topic" type="string" value="/cmd_vel" />
+		<param name="local_path_topic" type="string" value="/local_path" />
+
+		<param name="use_vel_commands" type="bool" value="true" />
+		<param name="use_waypoint_commands" type="bool" value="false" />
+		<param name="use_stop_before_action" type="bool" value="false" />
+
+		<!-- Robot -->
+		<param name="robot_colision_x" type="double" value="0.85" />
+		<param name="robot_colision_y" type="double" value="0.85" />
+		<param name="robot_colision_z" type="double" value="0.4" />
+
+		<!-- Path Following params for use_vel_commands -->
+		<param name="desired_altitude" type="double" value="0.25" />
+		<param name="max_lin_velocity" type="double" value="0.4" />
+		<param name="max_rot_velocity" type="double" value="0.25" />
+		<param name="goal_offset" type="double" value="0.10" />
+		<param name="lookahead_distance" type="double" value="1.0" />
+		<param name="raycasting_net_raster" type="double" value="0.25" />
+
+		<param name="reactive_const_potential_field" type="double" value="0.3" />
+
+		<param name="reactive_const_way_potential_field" type="double" value="0.5" />
+
+		<!--ædd update frequencies -->
+		
+		<!-- Display Visualizations Markers-->
+		<param name="show_markers" type="bool" value="true" />
+	</node>
+
+</launch>
+
+

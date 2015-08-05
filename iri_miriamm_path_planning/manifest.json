@@ -1,0 +1,15 @@
+{
+    "name": "com.ubuntu.developer.username.iri-miriamm-path-planning",
+    "description": "description of iri-miriamm-path-planning",
+    "framework": "ubuntu-sdk-14.04-qml",
+    "architecture": "all",
+    "title": "iri-miriamm-path-planning",
+    "hooks": {
+        "iri-miriamm-path-planning": {
+            "apparmor": "iri-miriamm-path-planning.json",
+            "desktop": "iri_miriamm_path_planning.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": ""
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node pkg="iri_miriamm_path_follower" type="iri_miriamm_path_follower" name="iri_miriamm_path_follower" output="screen">
+
+		<!-- global params -->
+		<param name="global_frame" type="string" value="/world" />		
+		<param name="pose_update_topic" type="string" value="/odom_fake" />
+		<param name="octomap_topic" type="string" value="/exp/octomap_full" />
+		<param name="exploration_path_topic" type="string" value="/global_path" />
+		<param name="cmd_vel_topic" type="string" value="/cmd_vel" />
+		<param name="local_path_topic" type="string" value="/local_path" />
+
+		<param name="use_vel_commands" type="bool" value="false" />
+		<param name="use_waypoint_commands" type="bool" value="true" />
+		<param name="use_stop_before_action" type="bool" value="true" />
+
+		<!-- Robot -->
+		<param name="robot_colision_x" type="double" value="0.85" />
+		<param name="robot_colision_y" type="double" value="0.85" />
+		<param name="robot_colision_z" type="double" value="0.4" />
+
+		<!-- Path Following params for use_vel_commands -->
+		<param name="desired_altitude" type="double" value="0.25" />
+		<param name="max_lin_velocity" type="double" value="1.0" />
+		<param name="max_rot_velocity" type="double" value="0.2" />
+		<param name="goal_offset" type="double" value="0.05" />
+		<param name="lookahead_distance" type="double" value="0.6" />
+
+		<!-- cmd_vel control params -->
+		<param name="raycasting_net_raster" type="double" value="0.25" />
+		<param name="reactive_const_potential_field" type="double" value="0.3" />
+
+		<!-- waypoint control params -->
+		<param name="reactive_const_way_potential_field" type="double" value="0.5" />
+		<param name="update_waypoints_freq" type="double" value="2" />
+
+		<!--ædd update frequencies -->
+		
+		<!-- Display Visualizations Markers-->
+		<param name="show_markers" type="bool" value="true" />
+
+		<!-- action topic remap -->
+		<remap from="/take_off/goal" to="/kinton_autonomy/input_take_off/goal"/>
+		<remap from="/take_off/feedback" to="/kinton_autonomy/input_take_off/feedback"/>
+		<remap from="/take_off/result" to="/kinton_autonomy/input_take_off/result"/>
+		<remap from="/take_off/cancel" to="/kinton_autonomy/input_take_off/cancel"/>
+		<remap from="/take_off/status" to="/kinton_autonomy/input_take_off/status"/>
+		<remap from="/land/goal" to="/kinton_autonomy/input_land/goal"/>
+		<remap from="/land/feedback" to="/kinton_autonomy/input_land/feedback"/>
+		<remap from="/land/result" to="/kinton_autonomy/input_land/result"/>
+		<remap from="/land/cancel" to="/kinton_autonomy/input_land/cancel"/>
+		<remap from="/land/status" to="/kinton_autonomy/input_land/status"/>  
+		<remap from="/waypoints/goal" to="/kinton_autonomy/input_waypoints/goal"/>
+		<remap from="/waypoints/feedback" to="/kinton_autonomy/input_waypoints/feedback"/>
+		<remap from="/waypoints/result" to="/kinton_autonomy/input_waypoints/result"/>
+		<remap from="/waypoints/cancel" to="/kinton_autonomy/input_waypoints/cancel"/>
+		<remap from="/waypoints/status" to="/kinton_autonomy/input_waypoints/status"/>  
+	</node>
+</launch>
+
+

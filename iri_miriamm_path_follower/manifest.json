@@ -1,0 +1,15 @@
+{
+    "name": "com.ubuntu.developer.username.iri-miriamm-path-follower",
+    "description": "description of iri-miriamm-path-follower",
+    "framework": "ubuntu-sdk-14.04-qml",
+    "architecture": "all",
+    "title": "iri-miriamm-path-follower",
+    "hooks": {
+        "iri-miriamm-path-follower": {
+            "apparmor": "iri-miriamm-path-follower.json",
+            "desktop": "iri_miriamm_path_follower.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": ""
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node pkg="iri_miriamm_path_planning" type="iri_miriamm_path_planning" name="iri_miriamm_path_planning" output="screen">
+		<param name="pose_update_topic" type="string" value="/odom_fake" />
+		<param name="set_goal_topic" type="string" value="/set_goal_pose" />
+	</node>
+
+</launch>
+
+

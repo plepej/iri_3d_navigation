@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<launch>
+	<node pkg="iri_miriamm_path_planning" type="iri_miriamm_path_planning" name="iri_miriamm_path_planning" output="screen">
+
+		<!-- global params -->
+		<param name="global_frame" type="string" value="/world" />		
+		<param name="pose_update_topic" type="string" value="/odom_fake" />
+		<param name="octomap_topic" type="string" value="/octomap_full" />
+		<param name="path_topic" type="string" value="/global_path" />
+
+		<!-- Robot -->
+		<param name="robot_colision_x" type="double" value="0.85" />
+		<param name="robot_colision_y" type="double" value="0.85" />
+		<param name="robot_colision_z" type="double" value="0.35" />
+
+		<!-- Path Planning params -->
+		<param name="desired_altitude" type="double" value="0.4" />
+		<param name="expand_path_search" type="double" value="0.6" />
+		<param name="colision_check_per_rob_size" type="double" value="4.0" />
+		<param name="explore_z_down_limit" type="double" value="0.25" />
+		<param name="explore_z_up_limit" type="double" value="1.0" />
+		<param name="waypoints_raster" type="double" value="0.2" />
+		
+		<!-- Display Visualizations Markers-->
+		<param name="show_markers" type="bool" value="true" />
+	</node>
+</launch>
+
+

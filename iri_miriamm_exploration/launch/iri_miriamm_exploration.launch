@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<launch>
+	<node pkg="iri_miriamm_exploration" type="iri_miriamm_exploration" name="iri_miriamm_exploration" output="screen" respawn="true">
+
+		<!-- global params -->
+		<param name="global_frame" type="string" value="/world" />		
+		<param name="pose_update_topic" type="string" value="/odom_fake" />
+		<param name="octomap_topic" type="string" value="/octomap_full" />
+
+		<!-- Robot -->
+		<param name="robot_colision_x" type="double" value="0.85" />
+		<param name="robot_colision_y" type="double" value="0.85" />
+		<param name="robot_colision_z" type="double" value="0.35" />
+
+		<!-- Exploration params -->
+		<param name="explore_rate" type="double" value="2.0" />
+		<param name="colision_check_per_rob_size" type="double" value="2.0" />
+		<param name="explore_z_down_limit" type="double" value="0.25" />
+		<param name="explore_z_up_limit" type="double" value="1.0" />
+		<param name="explore_max_range" type="double" value="20.0" />
+		<param name="explore_min_range" type="double" value="4.3" />
+		<param name="explore_an_shift" type="double" value="20.0" />
+		<param name="max_x_world_size" type="double" value="11.0" />
+		<param name="max_y_world_size" type="double" value="11.0" />
+		<param name="exploration_strategy" type="string" value="closest_goal" />
+
+		<!-- Display Visualizations Markers-->
+		<param name="show_markers" type="bool" value="false" />
+	</node>
+</launch>
+
+
