@@ -1,0 +1,15 @@
+{
+    "name": "com.ubuntu.developer.username.transform-gazebo-pose",
+    "description": "description of transform-gazebo-pose",
+    "framework": "ubuntu-sdk-14.04-qml",
+    "architecture": "all",
+    "title": "transform-gazebo-pose",
+    "hooks": {
+        "transform-gazebo-pose": {
+            "apparmor": "transform-gazebo-pose.json",
+            "desktop": "transform_gazebo_pose.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": ""
+}
